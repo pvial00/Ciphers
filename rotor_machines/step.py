@@ -50,10 +50,8 @@ class Wiring:
 
 class Machine:
     
-    def provision(self, key, iv, num_rotors=26):
+    def provision(self, key, num_rotors=26):
         keylen = len(key)
-        ivlen = len(iv)
-        iv = list(iv)
         rotors = []
         for n in range(num_rotors):
             state = range(26)
@@ -63,14 +61,12 @@ class Machine:
                 state[k], state[n] = state[n], state[k]
             rotor = Rotor(state, (n + 1))
             rotors.append(rotor)
-        for n in range(ivlen):
-            rotors[n], rotors[(ord(iv[n]) - 65)] = rotors[(ord(iv[n]) - 65)], rotors[n]
         self.wiring = Wiring(rotors)
 
-    def encipher(self, data, key, iv):
-        self.provision(key, iv)
+    def encipher(self, data, key):
+        self.provision(key)
         return self.wiring.encipher(data)
 
-    def decipher(self, data, key, iv):
-        self.provision(key, iv)
+    def decipher(self, data, key):
+        self.provision(key)
         return self.wiring.decipher(data)
