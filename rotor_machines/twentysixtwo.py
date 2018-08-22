@@ -1,5 +1,5 @@
 class Rotor:
-    def __init__(self, state, setting, counter, mod):
+    def __init__(self, state, setting, counter):
         self.state = state
         self.setting = setting
         self.counter = counter
@@ -57,7 +57,8 @@ class Machine:
             for s in range(setting):
                 state.append(state.pop(0))
                 state.insert(13, state.pop(2))
-            rotors.append(Rotor(state, setting, setting, (26 * c)))
+                state.insert(7, state.pop(k))
+            rotors.append(Rotor(state, setting, setting))
             c += 1
         self.wiring = Wiring(rotors)
 
